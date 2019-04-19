@@ -13,8 +13,9 @@ public class hooks extends basepage {
     @Before
     public void setup() {
         String path = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", path.concat("\\src\\resources\\driver\\chromedriver.exe"));
+        System.setProperty("webdriver.chrome.driver", path.concat("\\src\\test\\resources\\drivers\\chromedriver.exe"));
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         driver.get(baseUrl);
     }
 
