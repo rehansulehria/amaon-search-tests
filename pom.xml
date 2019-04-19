@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.aut</groupId>
+    <artifactId>amazon.de-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.thoughtworks.gauge</groupId>
+            <artifactId>gauge-java</artifactId>
+            <version>0.6.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>25.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.11</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>4.0.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>RELEASE</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>ruleset.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+    <build>
+        <finalName>${artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M3</version>
+            </plugin>
+            <plugin>
+                <groupId>com.github.temyers</groupId>
+                <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+                <version>5.0.0</version>
+                <executions>
+                    <execution>
+                        <id>generateRunners</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>generateRunners</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Mandatory -->
+                            <glue>
+                                <package>searchtests.SearchStpdefs</package>
+                            </glue>
+                            <featuresDirectory>src/test/resources/features
+                            </featuresDirectory>
+                            <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
+                            <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
+                            <tags>
+                                <tag>@test</tag>
+                            </tags>
+                            <namingScheme>feature-title</namingScheme>
+                            <parallelScheme>FEATURE</parallelScheme>
+                            <plugins>
+                                <plugin>
+                                    <name>io.qameta.allure.cucumber3jvm.AllureCucumber3Jvm</name>
+                                    <noOutput>true</noOutput>
+                                </plugin>
+                                <plugin>
+                                    <name>pretty</name>
+                                </plugin>
+                                <plugin>
+                                    <!--The available options are junit, testng, html, pretty, json, usage and rerun -->
+                                    <name>json</name>
+                                    <!--Optional file extension. For build in cucumber plugins a sensible default is provided. -->
+                                    <extension>json</extension>
+                                    <!--Optional output directory. Overrides cucumberOutputDirectory. Usefull when different
+                                        plugins create files with the same extension-->
+                                </plugin>
+                                <plugin>
+                                    <name>junit</name>
+                                    <noOutput>true</noOutput>
+                                </plugin>
+                                <plugin>
+                                    <name>html</name>
+                                    <noOutput>true</noOutput>
+                                </plugin>
+                            </plugins>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19</version>
+                <configuration>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>resources</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <forkCount>5</forkCount>
+                    <reuseForks>false</reuseForks>
+                    <includes>
+                        <include>**/*IT.class</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
