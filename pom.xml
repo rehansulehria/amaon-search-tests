@@ -115,7 +115,7 @@
                         <configuration>
                             <!-- Mandatory -->
                             <glue>
-                                <package>searchtests.SearchStpdefs</package>
+                                <package>searchtests.stepdefs</package>
                             </glue>
                             <featuresDirectory>src/test/resources/features
                             </featuresDirectory>

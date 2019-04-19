@@ -1,7 +1,5 @@
 package searchtests;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import locators.elementlocators;
@@ -13,14 +11,9 @@ import pageobjects.searchpage;
 
 import java.util.List;
 
-public class SearchStpdefs {
+public class stepdefs {
     basepage base = new basepage();
     private int getPrice;
-
-    @Given("^User is on Amazon home page$")
-    public void userIsOnAmazonDePage() throws Throwable {
-
-    }
 
     @When("^Perform Search for \"([^\"]*)\"$")
     public void performSearchFor(String query) throws Throwable {
@@ -56,9 +49,10 @@ public class SearchStpdefs {
 
     @Then("^Verify Price has \"([^\"]*)\" postfix$")
     public void verifyPriceHasPostfix(String postfix) throws Throwable {
-        List<WebElement> getPostfix = new searchpage().finProductImage();
+        List<WebElement> getPostfix = new searchpage().euroPostFix();
         String priceSymbol = getPostfix.get(0).getText();
-        Assert.assertTrue("", priceSymbol.contains(postfix));
+        Assert.assertTrue("verify price has euro post fix"
+                , priceSymbol.contains(postfix));
     }
 
     @When("^click on first product page$")
@@ -69,6 +63,6 @@ public class SearchStpdefs {
     @Then("^Verify Price and Title on Product Page$")
     public void verifyPriceAndTitleOnProductPage() throws Throwable {
         List<WebElement> priceOnProductPage = new searchpage().priceOnProductPage();
-        Assert.assertEquals("", getPrice, priceOnProductPage.get(0).getText());
+        Assert.assertEquals(getPrice, priceOnProductPage.get(0).getText());
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class basepage {
     public static WebDriver driver;
-    public static final String walmartBaseURL = "https://www.amazon.de/";
+    public static final String baseUrl = "https://www.amazon.de/";
     private WebDriverWait wait;
 
     public basepage() {
