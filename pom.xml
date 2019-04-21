@@ -22,7 +22,7 @@
         <threetenbp-version>1.3.5</threetenbp-version>
         <okio-version>1.13.0</okio-version>
         <junit-version>4.12</junit-version>
-        <jive.restapi.utils.version>1.0.0</jive.restapi.utils.version>
+    
 
     </properties>
 
