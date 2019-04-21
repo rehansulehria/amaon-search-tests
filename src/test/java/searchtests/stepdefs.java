@@ -90,7 +90,7 @@ public class stepdefs {
     @Then("^Verify Rating is displayed$")
     public void verifyRatingIsDisplayed() throws Throwable {
         WebElement ratingProduct = new searchpage().ratingProduct();
-        Assert.assertTrue("title is same on product page",
+        Assert.assertTrue("Rating is displayed on product",
                 ratingProduct.isDisplayed());
     }
 }
