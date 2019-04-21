@@ -49,4 +49,8 @@ public class searchpage {
     }
 
 
+    public WebElement ratingProduct() {
+        return base.findElement
+                (By.cssSelector(elementlocators.RATING));
+    }
 }

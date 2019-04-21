@@ -1,5 +1,6 @@
 package searchtests;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -62,13 +63,9 @@ public class stepdefs {
                 , priceSymbol.contains(postfix));
     }
 
-    @When("^click on first product page$")
-    public void clickOnFirstProductPage() throws Throwable {
-        base.clickElement(By.cssSelector(elementlocators.PRODUCT_TITLE));
-    }
-
     @Then("^Verify Price is same on Product Page$")
     public void verifyPriceIsSameOnProductPage() throws Throwable {
+        new searchpage().clickProductPage();
         List<WebElement> priceOnProductPage = new searchpage().priceOnProductPage();
         String priceonProductPage = priceOnProductPage.get(0).getText().split(" ")[1];
         Assert.assertEquals(searchResultPagePrice, priceonProductPage);
@@ -88,5 +85,12 @@ public class stepdefs {
         String productPageTitleText = titleProductPage.getText();
         Assert.assertEquals("title is same on product page",
                 productTitles, productPageTitleText);
+    }
+
+    @Then("^Verify Rating is displayed$")
+    public void verifyRatingIsDisplayed() throws Throwable {
+        WebElement ratingProduct = new searchpage().ratingProduct();
+        Assert.assertTrue("title is same on product page",
+                ratingProduct.isDisplayed());
     }
 }
