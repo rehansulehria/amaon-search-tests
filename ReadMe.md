@@ -11,7 +11,7 @@
 2. Import Project as Maven Project. This will install all dependencies.
 3. To run the tests enter the command mvn clean test in terminal
 
-### Once all successful tests are run, you should see below output.
+### Once all successful tests are run, you should see below output on terminal.
 ![Screenshot](screenshot.png)
 
 
