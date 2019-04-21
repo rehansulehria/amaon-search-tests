@@ -11,7 +11,7 @@ public class searchpage {
 
     public void enterSearchQuery(String query) {
         base.sendKeysToInputField(By.cssSelector(elementlocators.SEARCH_TEXTBOX), query);
-        base.clickElement(By.cssSelector("#issDiv0"));
+        base.clickElement(By.cssSelector(elementlocators.SEARCH_RESULTS));
     }
 
     public List<WebElement> finProductImage() {
@@ -24,7 +24,7 @@ public class searchpage {
                 (By.cssSelector(elementlocators.PRODUCT_TITLE));
     }
 
-    public List<WebElement> verifyPriceAboveZero() {
+    public List<WebElement> searchResultPrice() {
         return base.findElements
                 (By.cssSelector(elementlocators.PRODUCT_PRICE));
     }
@@ -40,7 +40,12 @@ public class searchpage {
 
     public List<WebElement>  priceOnProductPage() {
         return base.findElements
-                (By.cssSelector(elementlocators.PRICE_PRODUCT_PAGE));
+                (By.xpath(elementlocators.PRICE_PRODUCT_PAGE));
+    }
+
+    public WebElement  titleOnProductPage() {
+        return base.findElement
+                (By.id(elementlocators.TITLE_PRODUCT_PAGE));
     }
 
 

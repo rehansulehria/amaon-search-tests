@@ -1,5 +1,6 @@
 package searchtests;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import locators.elementlocators;
@@ -12,36 +13,42 @@ import pageobjects.searchpage;
 import java.util.List;
 
 public class stepdefs {
+
     basepage base = new basepage();
     private int getPrice;
+    private String searchResultPagePrice;
+    private String productTitles;
 
     @When("^Perform Search for \"([^\"]*)\"$")
-    public void performSearchFor(String query) throws Throwable {
-        base.sendKeysToInputField(By.cssSelector(elementlocators.SEARCH_TEXTBOX), query);
-        base.clickElement(By.cssSelector("#issDiv0"));
+    public void performSearch(String query) throws Throwable {
+        new searchpage().enterSearchQuery(query);
     }
 
     @Then("^Verify Search Results are Greater than (\\d+)$")
     public void verifySearchResultsAreGreaterThan(int arg0) throws Throwable {
-        List<WebElement> searchResult = new searchpage().finProductImage();
-        Assert.assertTrue("", searchResult.size() > 0);
+        List<WebElement> productPrice = new searchpage().finProductImage();
+        Assert.assertTrue("verify search results are greater than zero",
+                productPrice.size() > 0);
 
     }
 
     @Then("^Verify Search Results Cotain word \"([^\"]*)\"$")
     public void verifySearchResultsCotainWord(String word) throws Throwable {
         List<WebElement> titles = new searchpage().findProductTitle();
-        Assert.assertTrue("", titles.get(0).getText().contains(word));
+        productTitles = titles.get(0).getText();
+        Assert.assertTrue("verify product title contains batman",
+                titles.get(0).getText().contains(word));
     }
 
     @Then("^Verify Price is Above (\\d+) for First Item$")
-    public void verifyPriceIsForFirstItem(int arg0) throws Throwable {
-        List<WebElement> itemsPrice = new searchpage().finProductImage();
-        String firstProductPrice = itemsPrice.get(0).getText();
+    public void verifyPriceAboveZero(int arg0) throws Throwable {
+        List<WebElement> itemsPrice = new searchpage().searchResultPrice();
+        searchResultPagePrice = itemsPrice.get(0).getText();
         try {
-            getPrice = Integer.parseInt(firstProductPrice);
+            getPrice = Integer.parseInt(searchResultPagePrice);
             System.out.println(getPrice);
-            Assert.assertTrue("", getPrice > 0);
+            Assert.assertTrue("verify Price is above zero",
+                    getPrice > 0);
         } catch (NumberFormatException ex) {
             ex.getStackTrace();
         }
@@ -60,9 +67,26 @@ public class stepdefs {
         base.clickElement(By.cssSelector(elementlocators.PRODUCT_TITLE));
     }
 
+    @Then("^Verify Price is same on Product Page$")
+    public void verifyPriceIsSameOnProductPage() throws Throwable {
+        List<WebElement> priceOnProductPage = new searchpage().priceOnProductPage();
+        String priceonProductPage = priceOnProductPage.get(0).getText().split(" ")[1];
+        Assert.assertEquals(searchResultPagePrice, priceonProductPage);
+    }
+
     @Then("^Verify Price and Title on Product Page$")
     public void verifyPriceAndTitleOnProductPage() throws Throwable {
         List<WebElement> priceOnProductPage = new searchpage().priceOnProductPage();
-        Assert.assertEquals(getPrice, priceOnProductPage.get(0).getText());
+        String priceonProductPage = priceOnProductPage.get(0).getText().split(" ")[1];
+        Assert.assertEquals("price  is same on product page",
+                searchResultPagePrice, priceonProductPage);
+    }
+
+    @And("^Verify Title is same on Product Page$")
+    public void verifyTitleIsSameOnProductPage() throws Throwable {
+        WebElement titleProductPage = new searchpage().titleOnProductPage();
+        String productPageTitleText = titleProductPage.getText();
+        Assert.assertEquals("title is same on product page",
+                productTitles, productPageTitleText);
     }
 }
