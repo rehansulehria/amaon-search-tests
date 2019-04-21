@@ -3,7 +3,7 @@
 ### TestFramwork Consists of
 1. Selenium WebDriver with Java
 2. Junit for test assertions
-2. Cucumber
+2. Cucumber to Run Feature Files
 3. Maven to run Tests
 
 ### How to Setup and Run Tests
