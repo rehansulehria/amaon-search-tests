@@ -14,7 +14,4 @@
 ### Once all successful tests are run, you should see below output.
 ![Screenshot](screenshot.png)
 
-# Once all successful tests are run, you should see below in terminal.
-![test results](test_results.png)
-
 
